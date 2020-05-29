@@ -6,6 +6,7 @@
 {% if ipset_iptables_log_dropped %}
 -N {{ ipset_iptables_log_dropped_chain }}
 -A {{ ipset_iptables_log_dropped_chain }} -m limit --limit {{ ipset_iptables_log_dropped_limit }} -j LOG --log-prefix "{{ ipset_iptables_log_dropped_prefix }}: " --log-level {{ ipset_iptables_log_dropped_level }}
+-A OUTPUT -p tcp --tcp-flags SYN,ACK SYN,ACK -j LOG --log-prefix "Connection established: "
 -A {{ ipset_iptables_log_dropped_chain }} -j DROP
 {% endif %}
 {% if ipset_iptables_default_input_policy|upper != "ACCEPT" %}
